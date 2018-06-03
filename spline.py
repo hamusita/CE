@@ -1,4 +1,7 @@
 
+import numpy as np
+from matplotlib import pyplot
+
 def input_num():
     n = int(input("補間点の個数を入力:n = "))
     print("続いて補間点の座標を入力してください")
@@ -33,10 +36,25 @@ def cal(li, c):
         p[j][l]     = 3 * (h[j] * u[j - 1] + h[j - 1] * u[j])
 
     p = Gauss_Jordan(p, l)
-    print(p)
 
     #解をCにぶっ込む
-    c = [p[i][l + 1] for i in range(l)]
+    c = [p[i][l] for i in range(l)]
+    b = [(3 * u[j] - 2 * c[j] - c[j + 1]) / h[j] for j in range(l - 1)]
+    #b.append(-(3 * u[l - 2] - 2 * c[l - 2] - c[l - 1]) / h[l - 2])
+    a = [(b[k + 1] - b[k]) / (3 * h[k]) for k in range(l - 2)]
+    a.append((u[l - 2] - h[l - 2] * b[l - 2] - c[l - 2]) / (h[l - 2] ** 2))
+    print(a, b)
+
+    #結果出力
+    for i in range(l - 1):
+        print("S%d(x) = " % i)
+        print("(%f)(x - %f) ** 3 + " % (a[i], li[0][i]))
+        print("(%f)(x - %f) ** 2 + " % (b[i], li[0][i]))
+        print("(%f)(x - %f)      + " % (c[i], li[0][i]))
+        print("(%f)\n" % D[i])
+    
+    return a, b, c, D, l
+
 
 
 def Gauss_Jordan(p, l):
@@ -52,12 +70,26 @@ def Gauss_Jordan(p, l):
     
     return p
 
-def spline():
-    pass
+def spline(a, b, c, d, li, x):
+    h, val = li[0], 0
+    y = []
+    for i in x:
+        if not(i <= h[val + 1]):
+            val += 1
+            print(h[val + 1], val)
+        y = np.append(y, a[val] * (i - h[val]) ** 3 + b[val] * (i - h[val]) ** 2 + c[val] * (i - h[val]) + d[val])
+    return y
 
 def main():
     li, c = input_num()
-    cal(li, c)
+    a, b, c, d, l = cal(li, c)
+
+    f = int(input("何分割する？ n = "))
+    x = np.linspace(li[0][0], li[0][l - 1], f)
+    y = spline(a, b, c, d, li, x)
+
+    pyplot.plot(x, y)
+    pyplot.show()
 
 if __name__ == '__main__':
     main()

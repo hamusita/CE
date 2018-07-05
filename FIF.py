@@ -23,10 +23,11 @@ def diff(li):
 
 
 def cal(li, x):
-    s, t = li[1][0], 1
+    k = (x - li[0][0]) / (li[0][1] - li[0][0])
+    s, t = li[1][0], k
     for j in range(2,len(li)):
-        t *= (x - li[0][j-2])
         s += li[j][0] * t
+        t *= (k - j + 1) / j
     #print(t, s)
     return s
 

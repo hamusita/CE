@@ -12,3 +12,13 @@ def input_num():
     print(li, c)
     print("Ok. 入力を受け付けました")
     return li, c
+
+def cal():
+    pass
+
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()

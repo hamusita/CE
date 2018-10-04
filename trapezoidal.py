@@ -11,14 +11,13 @@ def main():
     h = (b - a) / d
     print(a, b, d, h)
     ans = f.subs([(x, a)]) * h / 2 + f.subs([(x, b)]) * h / 2 
-    for i in drange(a + h, b, h): 
+    for i in drange(a + h, b + h, h): 
         ans += f.subs([(x, i)]) * h
-        print()
     print("ans = %f" % ans)
 
 def drange(begin, end, step):
     n = begin
-    while n+step < end:
+    while n + step < end:
         yield n
         n += step
 

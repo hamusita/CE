@@ -4,9 +4,10 @@ def main():
     x = symbols('x')
     s = input("pythonの規則に準拠した数式を入れてください : ")
     f = x
-    exec('f = ' + s )
+    exec('f = ' + s, globals(), locals())
+    print(f)
     print("積分区間[a,b]を入力してください")
-    a, b = map(int, input("a,b = ").split())
+    a, b = map(float, input("a,b = ").split())
     d = int(input("分割数を入力 : v = "))
     h = (b - a) / d
     print(a, b, d, h)

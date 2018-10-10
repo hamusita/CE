@@ -16,7 +16,6 @@ def input_num():
 def cal():
     pass
 
-
 def main():
     pass
 

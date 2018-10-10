@@ -11,9 +11,13 @@ def main():
     n = int(input("分割数を入力 : v = "))
     h = (b - a) / n
     print(a, b, n, h)
-    ans = f.sym.subs([(x, a)]) * h / 2 + f.sym.subs([(x, b)]) * h / 2 
-    for i in drange(a + h, b + h, h): 
-        ans += f.sym.subs([(x, i)]) * h
+    ans = (f.subs([(x, a)]) + f.subs([(x, b)])) * h / 3
+    #print(f.subs([(x, a)]) + f.subs([(x, b)]))
+    for i in drange(a + h, b + 2 * h, 2 * h):
+        #print(i, f.subs([(x, i)]), i + h, f.subs([(x, i + h)]))
+        ans += f.subs([(x, i)]) * 4 * h / 3
+        ans += f.subs([(x, i + h)]) * 2 * h / 3
+    ans -= f.subs([(x, b)]) * 2 * h / 3
     print("ans = %f" % ans)
 
 def drange(begin, end, step):

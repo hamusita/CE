@@ -17,7 +17,8 @@ def main():
         #print(i, f.subs([(x, i)]), i + h, f.subs([(x, i + h)]))
         ans += f.subs([(x, i)]) * 4 * h / 3
         ans += f.subs([(x, i + h)]) * 2 * h / 3
-    ans -= f.subs([(x, b)]) * 2 * h / 3
+        last = i + h
+    ans -= f.subs([(x, last)]) * 2 * h / 3
     print("ans = %f" % ans)
 
 def drange(begin, end, step):
